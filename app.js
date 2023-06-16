@@ -6,20 +6,33 @@ function Node(data, left, right) {
     }
   }
 
-function Tree(array, root) {
+function Tree(array) {
     return {
-        root: root,
+        root: buildTree(array, 0, array.length-1),
 
         doSomething: function() {
-            return
+            return this.root
         }
     }
 }
 
-function buildTree(array) {
+function buildTree(array, start, end) {
     //Remove duplicates from array
     const sortedArray = mergeSort(array)
+
+    if (start > end) {
+        return null
+    }
+
+    const mid = parseInt((start + end) / 2)
+    const node = new Node(sortedArray[mid])
+
+    node.left = buildTree(sortedArray, start, mid - 1)
+    node.right = buildTree(sortedArray, mid + 1, end)
+
+    return node
 }
+
 
 function insertNode() {}
 
@@ -44,7 +57,10 @@ function isBalanced () {}
 
 function rebalance() {}
 
-function test() {}
+function test() {
+    const bst = Tree([1, 7, 4, 23, 8, 9, 3, 5, 67, 6345, 324])
+    return bst.doSomething()
+}
 
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
