@@ -59,7 +59,7 @@ function rebalance() {}
 
 function test() {
     const bst = Tree([1, 7, 4, 23, 8, 9, 3, 5, 67, 6345, 324])
-    return bst.doSomething()
+    return prettyPrint(bst.doSomething())
 }
 
 
