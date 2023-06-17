@@ -1,4 +1,4 @@
-const w = require('./processArray.js')
+const w = require("./processArray.js")
 
 function Node(data, left, right) {
   return {
@@ -14,7 +14,7 @@ function Tree(array) {
     root: buildTree(arr, 0, arr.length - 1),
 
     print: function () {
-      return this.root
+      return prettyPrint(this.root)
     },
   }
 }
@@ -33,13 +33,38 @@ function buildTree(array, start, end) {
   return node
 }
 
-function insertNode() {}
+const prettyPrint = (node, prefix = "", isLeft = true) => {
+  if (node === null) {
+    return
+  }
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false)
+  }
+  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`)
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true)
+  }
+}
+
+function insertNode(node, key) {
+  if (node === null) {
+    return new Node(key)
+  }
+  
+  if (key < node.data) {
+    node.left = insertNode(node.left, key)
+  } else if (key > node.data) {
+    node.right = insertNode(node.right, key)
+  }
+
+  return node
+}
 
 function deleteNode() {}
 
 function findNode(key, bst) {
   if (bst !== null) {
-  const root = bst.data
+    const root = bst.data
     if (root === key) {
       return bst
     } else if (root > key) {
@@ -50,9 +75,8 @@ function findNode(key, bst) {
       return findNode(key, tmp)
     }
   } else {
-    return 'Not found'
+    return "Not found"
   }
-  
 }
 
 function levelOrder(funct) {}
@@ -73,23 +97,10 @@ function rebalance() {}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-  //return prettyPrint(bst.print())
-  return findNode(1, bst.root)
+  //return findNode(1, bst.root)
+  insertNode(bst.root, 0)
+  return bst.print()
 }
-
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false)
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`)
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true)
-  }
-}
-
 module.exports = {
   z: test,
 }
