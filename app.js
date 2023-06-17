@@ -120,7 +120,30 @@ function findNode(key, bst) {
   }
 }
 
-function levelOrder(funct) {}
+function levelOrder(node, funct) {
+  let queue = []
+  let output = []
+
+  if (node.data !== null) {
+    queue.push(node)
+
+    while (queue.length > 0) {
+      let current = queue[0]
+      output.push(current.data)
+
+      if (current.left !== null) {
+        queue.push(current.left)
+      }
+      if (current.right !== null) {
+        queue.push(current.right)
+      }
+      queue.splice(0, 1)
+    }
+
+    return output
+    //Currently not providing each node into funct()
+  }
+}
 
 function inorder(root) {
   if (root !== null) {
@@ -144,11 +167,13 @@ function rebalance() {}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+  return levelOrder(bst.root)
   //return findNode(1, bst.root)
   //insertNode(bst.root, 0)
   //return inorder(bst.root)
-  deleteNode(bst.root, 8)
-  return bst.print()
+  //deleteNode(bst.root, 8)
+  //return bst.print()
+  //console.log(bst.root.right.data)
 }
 module.exports = {
   z: test,
