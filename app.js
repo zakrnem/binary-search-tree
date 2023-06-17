@@ -50,7 +50,7 @@ function insertNode(node, key) {
   if (node === null) {
     return new Node(key)
   }
-  
+
   if (key < node.data) {
     node.left = insertNode(node.left, key)
   } else if (key > node.data) {
@@ -60,7 +60,48 @@ function insertNode(node, key) {
   return node
 }
 
-function deleteNode() {}
+function deleteNode(root, key) {
+  if (root === null) {
+    return root
+  }
+
+  if (root.data > key) {
+    root.left = deleteNode(root.left, key)
+    return root
+  } else if (root.data < key) {
+    root.right = deleteNode(root.right, key)
+    return root
+  }
+
+  if (root.left === null) {
+    let temp = root.right
+    delete root
+    return temp
+  } else if (root.right === null) {
+    let temp = root.left
+    delete root
+    return temp
+  } else {
+    let succParent = root
+
+    let succ = root.right
+    while (succ.left !== null) {
+      succParent = succ
+      succ = succ.left
+    }
+
+    if (succParent !== root) {
+      succParent.left = succ.right
+    } else {
+      succParent.right = succ.right
+    }
+
+    root.data = succ.data
+
+    delete succ
+    return root
+  }
+}
 
 function findNode(key, bst) {
   if (bst !== null) {
@@ -81,7 +122,13 @@ function findNode(key, bst) {
 
 function levelOrder(funct) {}
 
-function inorder() {}
+function inorder(root) {
+  if (root !== null) {
+    inorder(root.left)
+    console.log(root.data)
+    inorder(root.right)
+  }
+}
 
 function preorder() {}
 
@@ -98,7 +145,9 @@ function rebalance() {}
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
   //return findNode(1, bst.root)
-  insertNode(bst.root, 0)
+  //insertNode(bst.root, 0)
+  //return inorder(bst.root)
+  deleteNode(bst.root, 8)
   return bst.print()
 }
 module.exports = {
