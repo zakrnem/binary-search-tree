@@ -155,6 +155,23 @@ function inorder(root) {
 
 function preorder() {}
 
+function recursivePreorder(node, queue, output) {
+  if (node.data !== null) {
+    queue.push(node)
+    let current = queue[0]
+    output.push(current.data)
+    queue.splice(0, 1)
+
+    if (current.left !== null) {
+      recursivePreorder(current.left, queue, output)
+    }
+    if (current.right !== null) {
+      recursivePreorder(current.right, queue, output)
+    }
+  }
+  if (queue.length === 0) return output
+}
+
 function postorder() {}
 
 function height() {}
@@ -167,7 +184,8 @@ function rebalance() {}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-  return levelOrder(bst.root)
+  return recursivePreorder(bst.root, [], [])
+  //return levelOrder(bst.root)
   //return findNode(1, bst.root)
   //insertNode(bst.root, 0)
   //return inorder(bst.root)
