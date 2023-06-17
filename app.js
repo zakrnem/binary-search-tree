@@ -35,7 +35,23 @@ function insertNode() {}
 
 function deleteNode() {}
 
-function findNode() {}
+function findNode(key, bst) {
+  if (bst !== null) {
+  const root = bst.data
+    if (root === key) {
+      return bst
+    } else if (root > key) {
+      let tmp = bst.left
+      return findNode(key, tmp)
+    } else if (root < key) {
+      let tmp = bst.right
+      return findNode(key, tmp)
+    }
+  } else {
+    return 'Not found'
+  }
+  
+}
 
 function levelOrder(funct) {}
 
@@ -55,7 +71,8 @@ function rebalance() {}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-  return prettyPrint(bst.print())
+  //return prettyPrint(bst.print())
+  return findNode(9, bst.root)
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
