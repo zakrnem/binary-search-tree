@@ -145,6 +145,23 @@ function levelOrder(node, funct) {
   }
 }
 
+/* function recursiveLevelorder(node, queue, output) {
+  if (node.data !== null) {
+    queue.push(node)
+    let current = queue[0]
+    output.push(current.data)
+    queue.shift()
+
+    if (current.left !== null) {
+      recursiveLevelorder(current.left, queue, output)
+    }
+    if (current.right !== null) {
+      recursiveLevelorder(current.right, queue, output)
+    }
+  }
+  if (queue.length === 0) return output
+} */
+
 function inorder(root) {
   if (root !== null) {
     inorder(root.left)
@@ -172,7 +189,16 @@ function recursivePreorder(node, queue, output) {
   if (queue.length === 0) return output
 }
 
-function postorder() {}
+function postorder(node) {
+  if (node == null) {
+    return []
+  }
+
+  const left = postorder(node.left)
+  const right = postorder(node.right)
+
+  return [...left, ...right, node.data]
+}
 
 function height() {}
 
@@ -184,7 +210,10 @@ function rebalance() {}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-  return recursivePreorder(bst.root, [], [])
+  //console.log(bst.root.left)
+  return postorder(bst.root)
+  //return recursiveLevelorder(bst.root, [], [])
+  //return recursivePreorder(bst.root, [], [])
   //return levelOrder(bst.root)
   //return findNode(1, bst.root)
   //insertNode(bst.root, 0)
