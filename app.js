@@ -145,23 +145,6 @@ function levelOrder(node, funct) {
   }
 }
 
-/* function recursiveLevelorder(node, queue, output) {
-  if (node.data !== null) {
-    queue.push(node)
-    let current = queue[0]
-    output.push(current.data)
-    queue.shift()
-
-    if (current.left !== null) {
-      recursiveLevelorder(current.left, queue, output)
-    }
-    if (current.right !== null) {
-      recursiveLevelorder(current.right, queue, output)
-    }
-  }
-  if (queue.length === 0) return output
-} */
-
 function inorder(root) {
   if (root !== null) {
     inorder(root.left)
@@ -200,9 +183,31 @@ function postorder(node) {
   return [...left, ...right, node.data]
 }
 
-function height() {}
+function height(node) {
+  if (node == null) return 0
+  else {
+    let lDepth = height(node.left)
+    let rDepth = height(node.right)
 
-function depth() {}
+    if (lDepth > rDepth) return lDepth + 1
+    else return rDepth + 1
+  }
+}
+
+function depth(bst, node, counter) {
+  if (bst !== null) {
+    counter++
+    if (bst.data === node) {
+      return counter
+    } else {
+      let left = depth(bst.left, node, counter)
+      let right = depth(bst.right, node, counter)
+
+      if (left !== undefined) return left
+      else if (right !== undefined) return right
+    }
+  }
+}
 
 function isBalanced() {}
 
@@ -210,8 +215,10 @@ function rebalance() {}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+  return depth(bst.root, 324, 0)
+  //return height(bst.root, 0)
   //console.log(bst.root.left)
-  return postorder(bst.root)
+  //return postorder(bst.root)
   //return recursiveLevelorder(bst.root, [], [])
   //return recursivePreorder(bst.root, [], [])
   //return levelOrder(bst.root)
