@@ -209,13 +209,39 @@ function depth(bst, node, counter) {
   }
 }
 
-function isBalanced() {}
+function isBalanced(node) {
+  if (node !== null) {
+    let lDepth = height(node.left)
+    let rDepth = height(node.right)
+    let diff = Math.abs(lDepth - rDepth)
+    console.log("delta", diff)
+
+    if (diff > 1) {
+      return false
+    } else {
+      let lBranch = isBalanced(node.left)
+      let rBranch = isBalanced(node.right)
+
+      if (lBranch === false || rBranch === false) {
+        return false
+      } else {
+        return true
+      }
+    }
+  }
+}
 
 function rebalance() {}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-  return depth(bst.root, 324, 0)
+  deleteNode(bst.root, 4)
+  //deleteNode(bst.root, 5)
+  //deleteNode(bst.root, 7)
+  //deleteNode(bst.root, 3)
+  //return bst.print()
+  return isBalanced(bst.root)
+  //return depth(bst.root, 324, 0)
   //return height(bst.root, 0)
   //console.log(bst.root.left)
   //return postorder(bst.root)
