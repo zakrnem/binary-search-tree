@@ -145,13 +145,18 @@ function levelOrder(node, funct) {
   }
 }
 
-function inorder(root) {
-  if (root !== null) {
-    inorder(root.left)
-    console.log(root.data)
-    inorder(root.right)
+function inorder(node) {
+  if (node === null) {
+    return []
   }
+  
+  const result = [];
+  result.push(...inorder(node.left));
+  result.push(node.data);
+  result.push(...inorder(node.right));
+  return result
 }
+
 
 function preorder() {}
 
@@ -214,8 +219,7 @@ function isBalanced(node) {
     let lDepth = height(node.left)
     let rDepth = height(node.right)
     let diff = Math.abs(lDepth - rDepth)
-    console.log("delta", diff)
-
+    
     if (diff > 1) {
       return false
     } else {
@@ -231,16 +235,26 @@ function isBalanced(node) {
   }
 }
 
-function rebalance() {}
+function rebalance(node) {
+  let arr = [...inorder(node)]
+  console.log(arr)
+  /* node = Tree(arr)
+  return node.print() */
+}
 
 function test() {
   const bst = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-  deleteNode(bst.root, 4)
+  insertNode(bst.root, 101)
+  insertNode(bst.root, 102)
+  insertNode(bst.root, 103)
+  insertNode(bst.root, 104)
+  //deleteNode(bst.root, 4)
   //deleteNode(bst.root, 5)
   //deleteNode(bst.root, 7)
   //deleteNode(bst.root, 3)
   //return bst.print()
-  return isBalanced(bst.root)
+  //return rebalance(bst.root)
+  //return isBalanced(bst.root)
   //return depth(bst.root, 324, 0)
   //return height(bst.root, 0)
   //console.log(bst.root.left)
@@ -250,7 +264,7 @@ function test() {
   //return levelOrder(bst.root)
   //return findNode(1, bst.root)
   //insertNode(bst.root, 0)
-  //return inorder(bst.root)
+  return inorder(bst.root)
   //deleteNode(bst.root, 8)
   //return bst.print()
   //console.log(bst.root.right.data)
